@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CarEngines.Car>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@ViewBag.message</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Brand
+                </th>
+                <th>
+                    Model
+                </th>
+                <th>
+                    l/100km
+                </th>
+                <th>
+                    Production                                                    
+                </th>
+                <th>
+                    HP
+                </th>
+                <th>
+                    Nm
+                </th>
+                <th>
+                    0-100km/h(s)
+                </th>
+                <th>
+                    MaxSpeed(km/h)
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Link
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Car_Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fuel_Consumption)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartOfProduction) - @Html.DisplayFor(modelItem => item.EndOfProduction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Power_HP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Torque_Nm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Acceleration_0_100)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaxSpeed_KM_H)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AveragePrice_PLN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtomotoLink)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

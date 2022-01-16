@@ -1,0 +1,97 @@
+﻿@model CarEngines.Car
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Car</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Car_Brand" class="control-label"></label>
+                <input asp-for="Car_Brand" class="form-control" />
+                <span asp-validation-for="Car_Brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fuel_Consumption" class="control-label"></label>
+                <input asp-for="Fuel_Consumption" class="form-control" />
+                <span asp-validation-for="Fuel_Consumption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartOfProduction" class="control-label"></label>
+                <input asp-for="StartOfProduction" class="form-control" />
+                <span asp-validation-for="StartOfProduction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndOfProduction" class="control-label"></label>
+                <input asp-for="EndOfProduction" class="form-control" />
+                <span asp-validation-for="EndOfProduction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Power_HP" class="control-label"></label>
+                <input asp-for="Power_HP" class="form-control" />
+                <span asp-validation-for="Power_HP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Torque_Nm" class="control-label"></label>
+                <input asp-for="Torque_Nm" class="form-control" />
+                <span asp-validation-for="Torque_Nm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Acceleration_0_100" class="control-label"></label>
+                <input asp-for="Acceleration_0_100" class="form-control" />
+                <span asp-validation-for="Acceleration_0_100" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxSpeed_KM_H" class="control-label"></label>
+                <input asp-for="MaxSpeed_KM_H" class="form-control" />
+                <span asp-validation-for="MaxSpeed_KM_H" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AveragePrice_PLN" class="control-label"></label>
+                <input asp-for="AveragePrice_PLN" class="form-control" />
+                <span asp-validation-for="AveragePrice_PLN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OtomotoLink" class="control-label"></label>
+                <input asp-for="OtomotoLink" class="form-control" />
+                <span asp-validation-for="OtomotoLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineId" class="control-label"></label>
+                <select asp-for="EngineId" class="form-control">
+                    <option value="">Select engine</option>
+                    @foreach (var item in ViewBag.data)
+                    {
+                    <option value=@item.Id>@item.Capacity_ccm ccm - @item.Brand</option>
+                    }
+                </select>
+
+                <span asp-validation-for="EngineId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href='javascript:history.go(-1)'>Back to list</a>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
