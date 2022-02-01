@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace CarEngines
 {
@@ -26,7 +29,23 @@ namespace CarEngines
         {
             services.AddDbContext<EngineContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();
-            services.AddTransient(typeof(IMainRepository<>), typeof(MainRepository<>));
+            services.AddTransient(typeof(IMainRepository<>), typeof(MainRepository<>));          
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<IdentityContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+            });                   
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +65,11 @@ namespace CarEngines
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCookiePolicy();
+            
+
 
             app.UseRequestLocalization(options =>
             {
@@ -61,8 +83,10 @@ namespace CarEngines
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Engine}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
+           
+
 
         }
     }

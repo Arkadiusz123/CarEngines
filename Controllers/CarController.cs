@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace CarEngines.Controllers
 {
+    [Authorize]
     public class CarController : Controller
     {
         private readonly IMainRepository<Car> _carRepository;
@@ -37,6 +39,7 @@ namespace CarEngines.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             var enginesList = _engineRepository.GetFullList();
@@ -46,6 +49,7 @@ namespace CarEngines.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create(Car car)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -56,6 +60,7 @@ namespace CarEngines.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Edit(int? id)
         {
             if (id == null) return BadRequest();
@@ -69,6 +74,7 @@ namespace CarEngines.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Edit(Car car)
         {          
             if (!ModelState.IsValid) return BadRequest();
@@ -78,6 +84,7 @@ namespace CarEngines.Controllers
             return RedirectToAction("Index", new { id = car.EngineId });
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int? id)
         {
             if (id == null) return BadRequest();
